@@ -2,6 +2,10 @@
 
 Node.js is a versatile platform for building all sorts of applications. In this course, we're going to make a dynamic website that displays a Treehouse student's profile information by creating a server that will dynamically generate content, handle URLs, read from files and build a simple template engine.
 
+# 疑惑
+
+1. 要怎麼放上線呢？
+
 ## Creating a Simple Server in Node.js
 
 創造連結[Treehouse](http://referrals.trhou.se/ninalee)學生資料庫的web app. Treehouse API url: `"http://teamtreehouse.com/" + username + ".json"`
@@ -36,12 +40,12 @@ NODE doc [http](https://nodejs.org/api/http.html#http_http)
 ## NODE API used
 
 * [http.createServer](https://nodejs.org/api/http.html#http_http_createserver_requestlistener)
-response.writeHead
-response.write
-response.end
-setInterval
+* response.writeHead
+* response.write
+* response.end
+* setInterval
 
-# HTTPS 說明
+## HTTPS 說明筆記
 
 ```js
 var http = require('http');
@@ -63,4 +67,8 @@ node app.js
 ```
 
 > 大約20秒之後瀏覽器才跑出東西，因為瀏覽器沒有讀到標準的`html`格式，所以他會等一下，想說可能晚點就會收到`<head>`, `<body>`等資訊。
+
+## 關於Router
+
+> When you type in a web address a request is sent to a server. After a domain name, there's a forward slash and then a path to a resource on the server. Sometimes, this is called a route. In this stage, we'll take a look at how to programmatically handle routes in Node.js.
 
