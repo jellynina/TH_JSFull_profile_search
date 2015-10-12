@@ -43,7 +43,7 @@ NODE doc [http](https://nodejs.org/api/http.html#http_http)
 * response.writeHead
 * response.write
 * response.end
-* setInterval
+* setInterval：每__ms執行一次。
 
 ## HTTPS 說明筆記
 
@@ -66,9 +66,56 @@ http.createServer(function (request, response) {
 node app.js
 ```
 
-> 大約20秒之後瀏覽器才跑出東西，因為瀏覽器沒有讀到標準的`html`格式，所以他會等一下，想說可能晚點就會收到`<head>`, `<body>`等資訊。
+> 大約20秒之後瀏覽器才跑出東西，因為瀏覽器沒有讀到標準的`html`格式，所以他會等一下，想說可能晚點就會收到`<head>`, `<body>`等資訊。但其實等不到，所以20秒後開始render出`response.write(new Date() + "\n");`/秒一次。
 
 ## 關於Router
 
 > When you type in a web address a request is sent to a server. After a domain name, there's a forward slash and then a path to a resource on the server. Sometimes, this is called a route. In this stage, we'll take a look at how to programmatically handle routes in Node.js.
+
+## nodeJS url 分頁範例
+
+網站有三個頁面: `root`, `contact`, `about`.
+
+#### index.js
+　```js 
+var http = require("http");
+var routes = require("./routes.js");
+
+http.createServer(function(request, response){
+    routes.root(request, response);
+    routes.contact(request, response);
+    routes.about(request, response);
+}).listen(3000);
+```
+
+####
+
+```js
+function root(request, response) {
+    if(request.url == "/") {
+        response.writeHead(200, {'Content-type': "text/plain"});
+        response.end("Home\n");
+    }
+}
+
+function contact(request, response) {
+    if(request.url == "/contact") {
+        response.writeHead(200, {'Content-type': "text/plain"});
+        response.end("Contact\n");
+    }
+}
+
+function about(request, response) {
+    if(request.url == "/about") {
+        response.writeHead(200, {'Content-type': "text/plain"});
+        response.end("About\n");
+    }
+}
+
+module.exports.root = root;
+module.exports.contact = contact;
+module.exports.about = about;
+```
+
+
 
