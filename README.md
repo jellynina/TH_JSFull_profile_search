@@ -77,7 +77,7 @@ node app.js
 網站有三個頁面: `root`, `contact`, `about`.
 
 #### index.js
-　```js 
+```js 
 var http = require("http");
 var routes = require("./routes.js");
 
@@ -88,7 +88,7 @@ http.createServer(function(request, response){
 }).listen(3000);
 ```
 
-####
+#### routes.js
 
 ```js
 function root(request, response) {
@@ -115,7 +115,40 @@ function about(request, response) {
 module.exports.root = root;
 module.exports.contact = contact;
 module.exports.about = about;
+
 ```
 
+## DRY with views
+
+> 這個部分能不能跟`erb`整合呢？
+
+[Don‘t repeat yourself](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
+
+## Read from files
+
+### Node.js APIs Used
+
+* [File System](https://nodejs.org/api/fs.html)
+* [fs.readFile](https://nodejs.org/api/fs.html#fs_fs_readfile_filename_options_callback)
+* fs.readFileSync
+* response.write
+* require
+* module.exports
+
+#### renderer.js
+
+```js
+function mergeValues (values, content){
+  // Cycle over the keys
+  for (var key in values) {
+    content = content.replace("{{" + key + "}}", values[key]);
+  };
+    //Replace all {{key}} with the value from the values object
+
+  return content;
+}
+```
+
+> 很像AngularJS的概念
 
 

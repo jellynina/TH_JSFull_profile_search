@@ -1,13 +1,15 @@
-var Profile = require("./profile.js");
+var Profile = require('./profile.js');
+var renderer = require('./renderer.js');
 
 function home (request, response){
 	//if url == "/" (只在home時執行) && GET
 	if(request.url === "/") {
 		//show search
 		response.writeHead(200, {'Content-Type': 'text/plain'});  
-		response.write("Header\n");
-		response.write("Search\n");
-		response.end('Footer\n');
+		renderer.view("header", {}, response);
+		renderer.view("search", {}, response);
+		renderer.view("footer", {}, response);
+		response.end();
 	}
 	//if url == "/" && POST
 		//redirect to /:username
@@ -17,7 +19,7 @@ function user (request, response){
 	var username = request.url.replace("/", "");
 	if (username.length > 0){
 		response.writeHead(200, {'Content-Type': 'text/plain'});  
-		response.write("Header\n");
+		renderer.view("header", {}, response);
 		//get json from Treehouse
 		var studentProfile = new Profile(username);
 		//on "end"
@@ -32,16 +34,19 @@ function user (request, response){
         javascriptPoints: profileJSON.points.JavaScript
       }
       //Simple response
-      response.write(values.username + " has " + values.badges + " badges\n");
-      response.end('Footer\n');
+      renderer.view("profile", values, response);
+      renderer.view("footer", {}, response);
+      response.end();
 
 		});
 
 		//on "error"
 		 studentProfile.on("error", function(error){
       //show error
-      response.write(error.message + "\n");
-      response.end('Footer\n');
+      renderer.view("error", {errorMessage: error.message}, response);
+      renderer.view("search", {}, response);
+      renderer.view("footer", {}, response);
+      response.end();
     });
 
 
