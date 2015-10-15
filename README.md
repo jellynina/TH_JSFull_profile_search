@@ -151,4 +151,22 @@ function mergeValues (values, content){
 
 > 很像AngularJS的概念
 
+## Sending Content Type Headers
+
+需要告訴瀏覽器現在載入的資料是什麼類型`internet content type`.
+
+```js
+response.writeHead(200, {'Content-Type': 'text/plain'});
+```
+
+setting a commonHeader
+
+```js
+var commonHeader = {'Content-Type': 'text/html'};
+```
+
+
+##Dealing with the POST Body
+
+* [querystring.parse](https://nodejs.org/api/querystring.html#querystring_querystring_parse_str_sep_eq_options)
 
